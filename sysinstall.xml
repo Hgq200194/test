@@ -1,0 +1,44 @@
+<?xml version="1.0"?>
+<document>
+        <transserver>
+                <listen>
+                        <addr>0.0.0.0</addr> <!-- 监听地址: 默认0.0.0.0不绑定网卡/IP -->
+                        <port>7091</port> <!-- 监听端口 -->
+                </listen>
+                <client>
+                        <maxcount>40000</maxcount> <!-- 同时支持的最大客户端数量 -->
+                </client>
+                <buffer>
+                        <response>2097152</response> <!-- Byte:数据发送最大buffer大小,网络条件不佳或数据量较大时,建议使用更大值,每个客户端会开辟一个64KB~Max的buffer -->
+                        <responsefile>0</responsefile> <!-- Byte:当response buffer不足以存放需要发送的数据时,暂时先存放到临时文件分多次读取到buffer发送,为0时不限制文件大小. NOTE: 一般只有重要数据才会存放到临时文件如http response头,实时数据一般丢弃 -->
+                        <request>20971520</request> <!-- Byte:数据接收最大buffer大小,根据请求数据特性配置即可,一般建议不超过2MB,每个客户端会开辟一个32KB~Max的buffer -->
+                </buffer>
+                <thread>
+                        <msgcount>640000</msgcount> <!-- 线程最大消息数量,一般为支持的最大客户端*16 -->
+                </thread>
+                <threadpoll>
+                        <threadcount>8</threadcount> <!-- 线程池线程数量,建议配置为cpu核数的1或1.5倍 -->
+                        <msgcount>2560000</msgcount> <!-- 线程最大消息数量,一般为支持的最大客户端*64 -->
+                </threadpoll>
+                <http>
+                        <rootpath>html</rootpath> <!-- 网页文件目录 -->
+                        <index>index.html</index> <!-- 默认首页文件 -->
+                        <username>root</username> <!-- Digest认证用户名 -->
+                        <password>root123456</password> <!-- Digest认证用户密码 -->
+                        <mimetypes>mime.types</mimetypes> <!-- mime types文件,相对于可执行文件的路径或绝对路径,在原生nginx mime.types文件上修改即可 -->
+                </http>
+        </transserver>
+        <upload>
+                <url>https://www.louzm.com/api/lzm-quality-center/eventRecord/receiveEvent/newVersion?channelId=applet</url> <!-- 推送完整URL地址 -->
+                <bearer>web|eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJBdXRob3JpemF0aW9uIjoiYWE1NjBkYWE2NTBmNGVjODliYmU1NDE4OTUzNDhmY2UiLCJpYXQiOjE3NjIyNDA1NTIsIlVzZXItSWQiOiIxNjgzMjg0NzUwNzUzNTk1MzkyIn0.jQmrn2TfG9WY025fbcvAtod6Rb8dY79eNBWs5XWDVN4</bearer> <!-- 认证信息 -->
+        </upload>
+        <wander>
+                <similarity>82.0</similarity> <!-- 最低相似度 -->
+                <interval>3600</interval> <!-- 检索多长时间内的信息，单位：s -->
+        </wander>
+        <log>
+                <level>6</level> <!-- info -->
+                <maxsize>1073741824</maxsize> <!-- 1GB -->
+                <maxdays>30</maxdays> <!-- 30天 -->
+        </log>
+</document>
